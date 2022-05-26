@@ -18,17 +18,17 @@ function Current() {
       .then(
         fetch(`${gridEndpoint}`)
           .then(reply => reply.json())
-          .then(data => data.properties.periods)
-          .then(array => console.log(array[0]))
+          .then(data => setForecastArray(data.properties.periods))
       )
   }, [])
 
   return (
     <div>
-      <form>
-
-      </form>
-      <div>{gridEndpoint}</div>
+      {forecastArray.map((period, index) => {
+        return (
+        <div key={index}>{period.name}</div>
+        )
+      })}
     </div>
   )
 }
