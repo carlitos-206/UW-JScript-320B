@@ -12,20 +12,27 @@ function GetForecast() {
     // format: https://api.weather.gov/points/{latitude},{longitude}
         fetch(`https://api.weather.gov/points/45.5312,-122.6447`)
           .then(reply => reply.json())
-          // .then(json => console.log(json.properties.forecast))
+          .then(json => json.properties.forecast)
     // Per docs grid endpoint is in the "forecast" property
-          .then(data => data.properties.forecast)
+          // .then(data => console.log(data.properties.forecast))
           .then(link => setGridEndpoint(link))
           .then(
             fetch(`${gridEndpoint}`)
               .then(reply => reply.json())
-              .then(data => setForecastObject(data.properties))
-              // .then(obj => setForecastObject(obj.periods[0]))
+              .then(obj => setForecastObject(obj))
+          //     .then(data => console.log(data))
+          //     // .then(obj => setForecastObject(obj.periods[0]))
           )
       }, [])
 
   return (
-    <div>{forecastObject.periods[1].name}</div>
+    // console.log(forecastObject.properties.periods)
+    <div>
+      {forecastObject.map((period, index) => (
+        <div key={index}>{forecastObject.properties.periods[0].name}
+        </div>
+      ))}
+    </div>
   )
 }
 
