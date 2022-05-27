@@ -5,7 +5,7 @@ function GetForecast() {
   // const [lat, setLat] = useState('');
   // const [long, setLong] = useState('');
   const [gridEndpoint, setGridEndpoint] = useState('');
-  const [forecastObject, setForecastObject] = useState({});
+  const [forecastArray, setForecastArray] = useState([]);
 
   useEffect(() => {
     // Can use lat/long to get grid endpoint link, which has the forecast data.
@@ -19,7 +19,8 @@ function GetForecast() {
           .then(
             fetch(`${gridEndpoint}`)
               .then(reply => reply.json())
-              .then(obj => setForecastObject(obj))
+              .then(json => json.properties.periods)
+              .then(array => setForecastArray(array))
           //     .then(data => console.log(data))
           //     // .then(obj => setForecastObject(obj.periods[0]))
           )
@@ -28,8 +29,8 @@ function GetForecast() {
   return (
     // console.log(forecastObject.properties.periods)
     <div>
-      {forecastObject.map((period, index) => (
-        <div key={index}>{forecastObject.properties.periods[0].name}
+      {forecastArray.map((period, index) => (
+        <div key={index}>{period.name}
         </div>
       ))}
     </div>
